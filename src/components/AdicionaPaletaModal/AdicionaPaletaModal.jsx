@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from "components/Modal/Modal";
+import { PaletaService } from "services/PaletaService";
+
 import './AdicionaPaletaModal.css'
 
-function AdicionaPaletaModal({ closeModal }) {
+function AdicionaPaletaModal({ closeModal, onCreatePaleta }) {
     const form = {
         preco: "",
         sabor: "",
@@ -16,6 +18,43 @@ function AdicionaPaletaModal({ closeModal }) {
     const handleChange = (e, name) => {
         setState({ ...state, [name]: e.target.value, });
     };
+    
+    const [canDisable, setCanDisable] = useState(true);
+
+    const canDisableSendButton = () => {
+        const response = !Boolean(
+            state.descricao.length 
+            && state.foto.length
+            && state.sabor.length
+            && state.preco.length
+        )
+        setCanDisable(response);
+    }
+
+    useEffect(()=>{
+        canDisableSendButton();
+    })
+
+    const createPaleta = async () => {
+        const renomeiaCaminhoFoto = (fotoPath) => fotoPath.split('\\').pop();
+    
+        const { sabor, recheio, descricao, preco, foto } = state;
+    
+        const titulo = sabor + (recheio && ' com ' + recheio);
+    
+        const paleta = {
+            sabor: titulo,
+            descricao,
+            preco,
+            foto: `assets/images/${renomeiaCaminhoFoto(foto)}`
+        }
+    
+        const response = await PaletaService.create(paleta);
+
+        onCreatePaleta(response);
+        
+        closeModal();
+    }
 
     return (
         <Modal closeModal={closeModal}>
@@ -29,7 +68,8 @@ function AdicionaPaletaModal({ closeModal }) {
                             placeholder="10,00"
                             type="text"
                             value={state.preco}
-                            onChange={(e) => handleChange(e, "preco")} />
+                            onChange={(e) => handleChange(e, "preco")} 
+                            required/>
                     </div>
                     <div>
                         <label className="AdicionaPaletaModal__text" htmlFor="sabor"> Sabor: </label>
@@ -38,7 +78,8 @@ function AdicionaPaletaModal({ closeModal }) {
                             placeholder="Chocolate"
                             type="text"
                             value={state.sabor}
-                            onChange={(e) => handleChange(e, "sabor")} />
+                            onChange={(e) => handleChange(e, "sabor")} 
+                            required/>
                     </div>
                     <div>
                         <label className="AdicionaPaletaModal__text" htmlFor="recheio"> Recheio: </label>
@@ -56,7 +97,8 @@ function AdicionaPaletaModal({ closeModal }) {
                             placeholder="Detalhe o produto"
                             type="text"
                             value={state.descricao}
-                            onChange={(e) => handleChange(e, "descricao")} />
+                            onChange={(e) => handleChange(e, "descricao")} 
+                            required/>
                     </div>
                     <div>
                         <label className="AdicionaPaletaModal__text  AdicionaPaletaModal__foto-label" htmlFor="foto" >
@@ -68,13 +110,11 @@ function AdicionaPaletaModal({ closeModal }) {
                             type="file"
                             accept="image/png, image/gif, image/jpeg"
                             value={state.foto}
-                            onChange={(e) => handleChange(e, "foto")} />
+                            onChange={(e) => handleChange(e, "foto")} 
+                            required/>
                     </div>
 
-                    <input
-                        className="AdicionaPaletaModal__enviar"
-                        type="submit"
-                        value="Enviar" />
+                    <button type="button" disabled={canDisable} className="AdicionaPaletaModal__enviar" onClick={createPaleta}>Enviar</button>
                 </form>
             </div>
         </Modal>
