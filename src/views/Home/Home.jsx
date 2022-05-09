@@ -17,6 +17,26 @@ function Home() {
     setModoAtual(novaAcao);
   }
 
+  const [paletaParaEditar, setPaletaParaEditar] = useState();
+  const [paletaParaDeletar, setPaletaParaDeletar] = useState();
+
+  const handleDeletePaleta = (paletaToDelete) => {
+    setPaletaParaDeletar(paletaToDelete);
+  }
+  
+  
+  const handleUpdatePaleta = (paletaToUpdate) => {
+    setPaletaParaEditar(paletaToUpdate);
+    setCanShowAdicionaPaletaModal(true);
+  }
+
+  const handleCloseModal = () => {
+    setCanShowAdicionaPaletaModal(false);
+    setPaletaParaAdicionar();
+    setPaletaParaDeletar();
+    setPaletaParaEditar();
+  }
+
   return <div className="Home">
       <Navbar
       mode={modoAtual} 
@@ -24,9 +44,17 @@ function Home() {
       updatePaleta={() => handleActions(ActionMode.ATUALIZAR)} />
 
       <div className="Home__container">
-        <PaletaLista paletaCriada={paletaParaAdicionar} />
+        <PaletaLista 
+            mode={modoAtual}
+            paletaCriada={paletaParaAdicionar}
+            deletePaleta={handleDeletePaleta}
+            updatePaleta={handleUpdatePaleta} />
         {
-            canShowAdicionaEditaPaletaModal && (<AdicionaEditaPaletaModal closeModal={() => setCanShowAdicionaPaletaModal(false)} 
+            canShowAdicionaEditaPaletaModal && (
+            <AdicionaEditaPaletaModal 
+            mode={modoAtual}
+            paletaToUpdate={paletaParaEditar}
+            closeModal={handleCloseModal} 
             onCreatePaleta={(paleta) => setPaletaParaAdicionar(paleta)}/>)
         }
       </div>
