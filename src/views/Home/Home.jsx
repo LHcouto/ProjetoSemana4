@@ -6,7 +6,8 @@ import { useState } from 'react';
 import { ActionMode } from 'constants/index';
 
 function Home() {
-
+  
+  const [paletaEditada, setPaletaEditada] = useState();
   const [canShowAdicionaEditaPaletaModal, setCanShowAdicionaPaletaModal] = useState(false);
   const [paletaParaAdicionar, setPaletaParaAdicionar] = useState();
   
@@ -35,18 +36,21 @@ function Home() {
     setPaletaParaAdicionar();
     setPaletaParaDeletar();
     setPaletaParaEditar();
+    setModoAtual(ActionMode.NORMAL);
   }
 
   return <div className="Home">
       <Navbar
       mode={modoAtual} 
       createPaleta={() => setCanShowAdicionaPaletaModal(true)} 
-      updatePaleta={() => handleActions(ActionMode.ATUALIZAR)} />
+      updatePaleta={() => handleActions(ActionMode.ATUALIZAR)}
+      deletePaleta={() => handleActions(ActionMode.DELETAR)} />
 
       <div className="Home__container">
         <PaletaLista 
             mode={modoAtual}
             paletaCriada={paletaParaAdicionar}
+            paletaEditada={paletaEditada}
             deletePaleta={handleDeletePaleta}
             updatePaleta={handleUpdatePaleta} />
         {
@@ -54,6 +58,7 @@ function Home() {
             <AdicionaEditaPaletaModal 
             mode={modoAtual}
             paletaToUpdate={paletaParaEditar}
+            onUpdatePaleta={(paleta) => setPaletaEditada(paleta)}
             closeModal={handleCloseModal} 
             onCreatePaleta={(paleta) => setPaletaParaAdicionar(paleta)}/>)
         }
