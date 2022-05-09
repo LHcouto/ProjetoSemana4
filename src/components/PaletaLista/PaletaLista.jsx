@@ -42,11 +42,11 @@ function PaletaLista({ paletaCriada }) {
   const adicionaPaletaNaLista = (paleta) => {
     const lista = [...paletas, paleta];
     setPaletas(lista);
-};
+  };
 
-useEffect(() => {
+  useEffect(() => {
     if (paletaCriada) adicionaPaletaNaLista(paletaCriada);
-}, [paletaCriada]);
+  }, [paletaCriada]);
 
   return (
     <div className="PaletaLista">
