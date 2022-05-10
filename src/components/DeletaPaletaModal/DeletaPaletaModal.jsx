@@ -1,6 +1,6 @@
-import "./DeletaPaletaModal.css";
-import Modal from "components/Modal/Modal";
-import { PaletaService } from "services/PaletaService";
+import './DeletaPaletaModal.css';
+import Modal from 'components/Modal/Modal';
+import { PaletaService } from 'services/PaletaService';
 
 function DeletaPaletaModal({ closeModal, paletaParaDeletar, onDeletePaleta }) {
   const handleDelete = async (paleta) => {
@@ -31,12 +31,12 @@ function DeletaPaletaModal({ closeModal, paletaParaDeletar, onDeletePaleta }) {
             onClick={() => handleDelete(paletaParaDeletar)}
             className="DeletaPaletaModal__confirmar"
           >
-            {" "}
-            Confirmar{" "}
+            {' '}
+            Confirmar{' '}
           </button>
           <button onClick={closeModal} className="DeletaPaletaModal__cancelar">
-            {" "}
-            Cancelar{" "}
+            {' '}
+            Cancelar{' '}
           </button>
         </div>
       </div>

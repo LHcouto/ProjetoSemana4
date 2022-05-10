@@ -3,9 +3,16 @@ import PaletaListaItem from 'components/PaletaListaItem/PaletaListaItem';
 import { PaletaService } from 'services/PaletaService';
 import './PaletaLista.css';
 import PaletaDetalhesModal from 'components/PaletaDetalhesModal/PaletaDetalhesModal';
-import { ActionMode } from "constants/index";
+import { ActionMode } from 'constants/index';
 
-function PaletaLista({ paletaCriada, mode, updatePaleta, deletePaleta, paletaEditada, paletaRemovida }) {
+function PaletaLista({
+  paletaCriada,
+  mode,
+  updatePaleta,
+  deletePaleta,
+  paletaEditada,
+  paletaRemovida,
+}) {
   const selecionadas = JSON.parse(localStorage.getItem('selecionadas')) ?? {};
 
   const [paletas, setPaletas] = useState([]);
@@ -22,18 +29,17 @@ function PaletaLista({ paletaCriada, mode, updatePaleta, deletePaleta, paletaEdi
   };
 
   const setSelecionadas = useCallback(() => {
-    if(!paletas.length) return
+    if (!paletas.length) return;
 
     const entries = Object.entries(paletaSelecionada);
-    const sacola = entries.map(arr => ({
+    const sacola = entries.map((arr) => ({
       paletaId: paletas[arr[0]].id,
-      quantidade: arr[1]
-    }))
+      quantidade: arr[1],
+    }));
 
-    localStorage.setItem('sacola', JSON.stringify(sacola))
-    localStorage.setItem('selecionadas', JSON.stringify(paletaSelecionada))
-  }, [ paletaSelecionada, paletas ])
-
+    localStorage.setItem('sacola', JSON.stringify(sacola));
+    localStorage.setItem('selecionadas', JSON.stringify(paletaSelecionada));
+  }, [paletaSelecionada, paletas]);
 
   const removerItem = (paletaIndex) => {
     const paleta = {
@@ -56,7 +62,6 @@ function PaletaLista({ paletaCriada, mode, updatePaleta, deletePaleta, paletaEdi
     };
 
     mapper[mode]();
-
   };
 
   useEffect(() => {
@@ -68,12 +73,12 @@ function PaletaLista({ paletaCriada, mode, updatePaleta, deletePaleta, paletaEdi
       const lista = [...paletas, paleta];
       setPaletas(lista);
     },
-    [paletas]
+    [paletas],
   );
 
   useEffect(() => {
     setSelecionadas();
-  }, [ setSelecionadas, paletaSelecionada ]);
+  }, [setSelecionadas, paletaSelecionada]);
 
   useEffect(() => {
     if (
@@ -83,7 +88,6 @@ function PaletaLista({ paletaCriada, mode, updatePaleta, deletePaleta, paletaEdi
       adicionaPaletaNaLista(paletaCriada);
     }
   }, [adicionaPaletaNaLista, paletaCriada, paletas]);
-
 
   return (
     <div className="PaletaLista">

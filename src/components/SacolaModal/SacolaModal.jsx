@@ -1,9 +1,9 @@
-import "./SacolaModal.css";
-import Modal from "components/Modal/Modal";
-import { SacolaService } from "services/SacolaService";
-import { useEffect, useState } from "react";
-import { PaletaService } from "services/PaletaService";
-import { useNavigate } from "react-router-dom";
+import './SacolaModal.css';
+import Modal from 'components/Modal/Modal';
+import { SacolaService } from 'services/SacolaService';
+import { useEffect, useState } from 'react';
+import { PaletaService } from 'services/PaletaService';
+import { useNavigate } from 'react-router-dom';
 
 function SacolaModal({ closeModal }) {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ function SacolaModal({ closeModal }) {
 
     const encontraNome = (id) => {
       const obj = paletaLista.find((i) => i.id === id);
-      return (obj && obj.titulo) ?? "";
+      return (obj && obj.titulo) ?? '';
     };
 
     if (Array.isArray(sacolaLista)) {
@@ -50,8 +50,8 @@ function SacolaModal({ closeModal }) {
         <div>
           {lista.map((i, idx) => (
             <div key={idx}>
-              {" "}
-              {i.nome + " " + i.quantidade + "x"} <br />
+              {' '}
+              {i.nome + ' ' + i.quantidade + 'x'} <br />
             </div>
           ))}
         </div>
@@ -60,8 +60,8 @@ function SacolaModal({ closeModal }) {
 
         <div>
           <button onClick={purchase} className="SacolaModal__confirmar">
-            {" "}
-            Fechar compra{" "}
+            {' '}
+            Fechar compra{' '}
           </button>
         </div>
       </div>

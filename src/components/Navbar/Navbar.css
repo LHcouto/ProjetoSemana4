@@ -68,7 +68,7 @@
   border: none;
   transform: translateY(-3px);
   border-radius: 10px;
-  transition: all .5s;
+  transition: all 0.5s;
   padding: 0;
 }
 
@@ -101,7 +101,6 @@
     row-gap: 20px;
   }
 }
-
 
 @media (max-width: 400px) {
   .Header {
