@@ -73,7 +73,7 @@ function PaletaLista({
       const lista = [...paletas, paleta];
       setPaletas(lista);
     },
-    [paletas],
+    [paletas]
   );
 
   useEffect(() => {

@@ -21,7 +21,9 @@ function AdicionaEditaPaletaModal({
   };
 
   const [state, setState] = useState(form);
+
   const [canDisable, setCanDisable] = useState(true);
+  
   const canDisableSendButton = () => {
     const response = !Boolean(
       state.descricao.length &&
